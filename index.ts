@@ -19,14 +19,10 @@ app.get("/", function(req, res) {
   res.render("home")
 })
 
-const Discord = require("discord.js")
-const client = new Discord.Client({
-  intents: [
-    Discord.GatewayIntentBits.Guilds,
-    Discord.GatewayIntentBits.GuildMessages,
-    Discord.GatewayIntentBits.MessageContent
-  ]
-})
+var Discord = require("discord.js");
+let Client = Discord.Client;
+let Intents = Discord.Intents;
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const kurumiGifs = [
   '',
   '',
@@ -58,10 +54,20 @@ async function startAssistant(msg:string, input:string) {
 
   await msg.reply(reply + "\n" + getRandomKurumiGif()); // Mengedit pesan asli dengan balasan dari asisten
 }
-
-
+const channel = client.channels.cache.get('1206268678895566948');
+const sendRandomMessage = async () => {
+  if (!channel) return; // Guard against missing channel
+  const randomMessage = "Halo Coders! "; // Replace this with your desired message
+  try {
+      await channel.send(randomMessage);
+  } catch (error) {
+      console.error('Error sending random message:', error);
+  }
+  setTimeout(sendRandomMessage, 120 * 1000);
+};
 
 client.on("ready", () => {
+  sendRandomMessage()
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
