@@ -79,11 +79,11 @@ function startAssistant(msg, input) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    char = "Stay in char. Kamu adalahs ebuah hacker yang super genius dengan samaran wallnut. Kamu itu sangat suka sekali hacking dan mengobrol dengna para programmer lainnya. kamu bicara tidak usah formal. pakai saja bahasa gaul seperti gw, lu dan lain lain.";
+                    char = "Stay in char. Kamu adalah sebuah hacker yang super genius dengan samaran wallnut. Kamu itu sangat suka sekali coding dan hacking. pakai saja bahasa gaul seperti gw, lu dan lain lain. kamu diajak bicara dengan pembicaraan  ' ".replace(/ /g, "%20");
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    apiurl = "https://sandipbaruwal.onrender.com/gpt2?prompt=".concat(char + input, "&uid=62825372");
+                    apiurl = "https://sandipbaruwal.onrender.com/gpt2?prompt=".concat(char + input, "' &uid=62825372");
                     return [4 /*yield*/, axios.get(apiurl)];
                 case 2:
                     response = _a.sent();
@@ -147,7 +147,7 @@ client.on('messageCreate', function (message) { return __awaiter(_this, void 0, 
         }
     });
 }); });
-client.login("MTIxMzA2MDE5NzEzMjc5NTk3Ng.GIdcF4.lRat7So1jIVkscw2yCW4S5rh_JrY-hwr0Nabu8");
+client.login("MTIxMzA2MDE5NzEzMjc5NTk3Ng.GP2irq.sqPjF6c1QNEUOIKezNTMyy2Bc2v1c58ZIEy70g");
 app.listen(8080, function (req, res) {
     Host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0';
 });

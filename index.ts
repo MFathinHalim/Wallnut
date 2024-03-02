@@ -46,10 +46,9 @@ function getRandomKurumiGif() {
 
 async function startAssistant(msg:string, input:string) {
   var reply;
-  var char = "Stay in char. Kamu adalahs ebuah hacker yang super genius dengan samaran wallnut. Kamu itu sangat suka sekali hacking dan mengobrol dengna para programmer lainnya. kamu bicara tidak usah formal. pakai saja bahasa gaul seperti gw, lu dan lain lain."
-
+  var char = "Stay in char. Kamu adalah sebuah hacker yang super genius dengan samaran wallnut. Kamu itu sangat suka sekali coding dan hacking. pakai saja bahasa gaul seperti gw, lu dan lain lain. kamu diajak bicara dengan pembicaraan  ' ".replace(/ /g, "%20");
   try{
-    const apiurl = `https://sandipbaruwal.onrender.com/gpt2?prompt=${char + input}&uid=62825372`;
+    const apiurl = `https://sandipbaruwal.onrender.com/gpt2?prompt=${char + input}' &uid=62825372`;
     const response = await axios.get(apiurl);
     reply = response.data
   }catch(e) {
@@ -101,8 +100,8 @@ client.on('messageCreate', async (message) => {
 });
 
 
-
-client.login("MTIxMzA2MDE5NzEzMjc5NTk3Ng.GIdcF4.lRat7So1jIVkscw2yCW4S5rh_JrY-hwr0Nabu8")
+require("dotenv").config()
+client.login(process.env.id)
 
 
 app.listen(8080, (req, res) => {
