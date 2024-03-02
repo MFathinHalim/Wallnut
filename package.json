@@ -4,23 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "dependencies": {
     "@types/node": "^18.0.6",
-    "axios": "^1.6.7",
+    "axios": "^0.28.0",
     "body-parser": "^1.20.2",
     "config.json": "^0.0.4",
-    "discord.js": "^14.7.1",
+    "discord.js": "^13.14.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
-    "express": "^4.18.2",
+    "express": "^4.18.3",
     "forever-monitor": "^3.0.3",
     "node-fetch": "^3.2.6",
-    "openai": "^3.3.0",
+    "openai": "^4.28.4",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {

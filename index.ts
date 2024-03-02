@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const axios = require("axios");
 const { MessageEmbed } = require('discord.js');
+const { setInterval } = require('timers/promises'); // Import if not already included
 
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, '/public')));
@@ -44,9 +45,9 @@ async function startAssistant(msg:string, input:string) {
   var reply;
   var char = "Stay in char. Kamu adalah sebuah hacker yang super genius dengan samaran wallnut. Kamu itu sangat suka sekali coding dan hacking. pakai saja bahasa gaul seperti gw, lu dan lain lain. kamu diajak bicara dengan pembicaraan  ' ".replace(/ /g, "%20");
   try{
-    const apiurl = `https://sandipbaruwal.onrender.com/gpt2?prompt=${char + input}' &uid=62825372`;
+    const apiurl = `https://sandipbaruwal.onrender.com/gemini?prompt=${encodeURIComponent(char + input)}' &uid=62825372`;
     const response = await axios.get(apiurl);
-    reply = response.data
+    reply = response.data.answer
   }catch(e) {
     console.log(e)
     reply = "aduh maaf kaka, kayaknya aku rusak, bisa tag <@1156486226094870569> buat perbaiki aku ya:("
@@ -55,32 +56,51 @@ async function startAssistant(msg:string, input:string) {
   await msg.reply(reply + "\n" + getRandomKurumiGif()); // Mengedit pesan asli dengan balasan dari asisten
 }
 const channel = client.channels.cache.get('1206268678895566948');
+
 const sendRandomMessage = async () => {
-  if (!channel) return; // Guard against missing channel
+  if (!channel) {
+    console.log("No channel found with ID 1206268678895566948."); // Informative message
+    return;
+  }
+
   const randomMessage = "Halo Coders! "; // Replace this with your desired message
   try {
-      await channel.send(randomMessage);
+    await channel.send(randomMessage);
   } catch (error) {
-      console.error('Error sending random message:', error);
+    console.error('Error sending random message:', error);
   }
-  setTimeout(sendRandomMessage, 120 * 1000);
 };
 
 client.on("ready", () => {
-  sendRandomMessage()
-  console.log(`Logged in as ${client.user.tag}!`)
-})
+  console.log(`Logged in as ${client.user.tag}!`);
+  setInterval(sendRandomMessage, 120 * 1000); // Start the interval after initial message
+});
 
+
+client.on('messageReply', async (message, reply) => {
+  console.log(reply.content)
+  if (reply.author.id !== '1213060197132795976') console.log("bukan urusan gweh"); // Hanya tanggapi balasan ke Wallnut
+  const replyContent = reply.content.trim();
+
+
+    const loadingMessage = await message.channel.sendTyping(); // Menyimpan pesan loading sebagai objek Message
+    await startAssistant(message, replyContent.replace("<@1213060197132795976>", "").trim());
+
+});
 
 client.on('messageCreate', async (message) => {
-
+  console.log(message.content);
   if (message.author.bot) return;
   if (message.content.startsWith("W>")) {
     const loadingMessage = await message.channel.sendTyping(); // Menyimpan pesan loading sebagai objek Message
     await startAssistant(message, message.content.replace("W>", "").trim());
     // Mengirim pesan embed ke saluran tertentu
 
-  }else if(message.content.startsWith("W-Motivation")) {
+  }else if(message.content.includes("<@1213060197132795976>")) {
+    const loadingMessage = await message.channel.sendTyping(); // Menyimpan pesan loading sebagai objek Message
+    await startAssistant(message, message.content.replace("<@1213060197132795976>", "").trim());
+  }
+   else if(message.content.startsWith("W-Motivation")) {
     const loadingMessage = await message.channel.sendTyping(); // Menyimpan pesan loading sebagai objek Message
     const category = 'computers';
     const apiKey = 'b58Wa7EBN9cRvAUXRohMog==HchlC22tksPqpt82';
@@ -100,8 +120,6 @@ client.on('messageCreate', async (message) => {
     .catch(error => {
       console.error('Error: ', error.response.data);
     });
-
-   
   }
 });
 
