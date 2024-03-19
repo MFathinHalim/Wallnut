@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const axios = require("axios");
 const { MessageEmbed } = require('discord.js');
-const { setInterval } = require('timers/promises'); // Import if not already included
+//const { setInterval } = require('timers/promises'); // Import if not already included
 
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, '/public')));
@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 app.get("/", function(req, res) {
-
   res.render("home")
 })
 
