@@ -17,6 +17,10 @@ app.use(
   })
 );
 
+app.get("/", (req: any, res: any) => {
+  res.render("home");
+});
+
 var Discord = require("discord.js");
 let Client = Discord.Client;
 let Intents = Discord.Intents;
